@@ -10,4 +10,4 @@ void ESP_ProcessByte(uint8_t byte);
 void USART1_IRQHandler(void);
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart);
 
-#endif /*
+#endif /* INC_ESP_COMM_H_ */

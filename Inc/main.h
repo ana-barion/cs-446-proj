@@ -194,4 +194,8 @@ void Error_Handler(void);
 extern char error_msg_[100];
 /* USER CODE END Private defines */
 
-#ifdef __cpl
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* __MAIN_H */

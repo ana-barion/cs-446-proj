@@ -36,4 +36,31 @@ void ESP_Send(const char *cmd) {
  */
 void ESP_ProcessByte(uint8_t byte) {
     if (esp_rx_index < ESP_RX_BUFFER_SIZE - 1) {
-        esp_rx_buffer[esp_rx_index++] = byt
+        esp_rx_buffer[esp_rx_index++] = byte;
+
+        if (byte == '\n') {
+            esp_rx_buffer[esp_rx_index] = '\0';  =
+            ESP_HandleMessage(esp_rx_buffer);    
+            esp_rx_index = 0;                    
+        }
+    } else {
+        esp_rx_index = 0;  
+    }
+}
+
+/**
+ * @brief USART1 IRQ handler
+ */
+void USART1_IRQHandler(void) {
+    HAL_UART_IRQHandler(&huart1);
+}
+
+/**
+ * @brief Callback when a byte is received
+ */
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
+    if (huart->Instance == USART1) {
+        ESP_ProcessByte(esp_rx_byte);
+        HAL_UART_Receive_IT(&huart1, &esp_rx_byte, 1);  // Re-enable RX
+    }
+}
